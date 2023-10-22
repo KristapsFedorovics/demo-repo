@@ -19,7 +19,7 @@ dt = datetime.now()
 request_date = str(dt.year) + "-" + str(dt.month).zfill(2) + "-" + str(dt.day).zfill(2)  
 print("Generated today's date: " + str(request_date))
 
-
+#Creates API request uzing previous variables
 print("Request url: " + str(nasa_api_url + "rest/v1/feed?start_date=" + request_date + "&end_date=" + request_date + "&api_key=" + nasa_api_key))
 r = requests.get(nasa_api_url + "rest/v1/feed?start_date=" + request_date + "&end_date=" + request_date + "&api_key=" + nasa_api_key)
 
@@ -27,24 +27,29 @@ print("Response status code: " + str(r.status_code))
 print("Response headers: " + str(r.headers))
 print("Response content: " + str(r.text))
 
+#If HTTP status 200, add JSON data to dictionary 
 if r.status_code == 200:
 
 	json_data = json.loads(r.text)
-
+	#Creates empty arrays
 	ast_safe = []
 	ast_hazardous = []
-
+	#Check if 'element_count' exists
 	if 'element_count' in json_data:
+		#convert astroid count to integer
 		ast_count = int(json_data['element_count'])
 		print("Asteroid count today: " + str(ast_count))
-
+		#Check if there are any astroids
 		if ast_count > 0:
+			#iterrate through asteroid data
 			for val in json_data['near_earth_objects'][request_date]:
+				#adds values  to variables
 				if 'name' and 'nasa_jpl_url' and 'estimated_diameter' and 'is_potentially_hazardous_asteroid' and 'close_approach_data' in val:
 					tmp_ast_name = val['name']
 					tmp_ast_nasa_jpl_url = val['nasa_jpl_url']
 					if 'kilometers' in val['estimated_diameter']:
 						if 'estimated_diameter_min' and 'estimated_diameter_max' in val['estimated_diameter']['kilometers']:
+							#rounds 
 							tmp_ast_diam_min = round(val['estimated_diameter']['kilometers']['estimated_diameter_min'], 3)
 							tmp_ast_diam_max = round(val['estimated_diameter']['kilometers']['estimated_diameter_max'], 3)
 						else:
