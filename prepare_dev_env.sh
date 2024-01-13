@@ -1,5 +1,5 @@
 #!/bin/bash
-sec_secret_storage_loc="/my_secret_files"
+sec_secret_storage_loc="/home/kristaps/secrets"
 
 echo "Script for preparing the development environment"
 echo "------------------------------------------------"
@@ -9,7 +9,7 @@ if test -f "config.ini"; then
     echo "exists"
 else
 	echo "Copying config file from secure secret storage"
-	cp $HOME$sec_secret_storage_loc/config.ini .
+	cp $sec_secret_storage_loc/config.ini .
 	if [ $? -eq 0 ]; then echo "OK"; else echo "Problem copying config.ini file"; exit 1; fi
 fi
 echo "------------------------------------------------"
