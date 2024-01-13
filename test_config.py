@@ -16,8 +16,8 @@ print("----------")
 
 # Testing if base script file exists on disk in the current working directory
 print("----------")
-print("Checking if naked.py file exists -->")
-assert os.path.isfile("naked.py") == True
+print("Checking if worker_2_db.py file exists -->")
+assert os.path.isfile("worker_2_db.py") == True
 print("OK")
 print("----------")
 
