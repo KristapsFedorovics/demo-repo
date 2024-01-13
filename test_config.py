@@ -1,9 +1,24 @@
 import os
 import requests
 import mysql.connector
+import subprocess
+import sys
 
 from datetime import datetime
 from configparser import ConfigParser
+
+def check_sql_server_installed():
+    try:
+        subprocess.check_output("mysql --version", shell=True, stderr=subprocess.STDOUT)
+        print("MySQL is installed.")
+        print("OK")
+        print("----------")
+        return True
+    except subprocess.CalledProcessError:
+        print("MySQL is not installed. Exiting the script")
+        return False
+        sys.exit(1)
+
 
 print("Configuration file test")
 
@@ -31,6 +46,10 @@ assert config.has_option('nasa', 'api_key') == True
 assert config.has_option('nasa', 'api_url') == True
 print("OK")
 print("----------")
+
+# Check if SQL Server is installed
+print("checking if MySQL is installed")
+sql_server_installed = check_sql_server_installed()
 
 # Checking if all MYSQL related config options are present in the config file
 print("Checking if config has MYSQL related options -->")
