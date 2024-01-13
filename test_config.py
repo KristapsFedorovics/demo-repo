@@ -14,6 +14,13 @@ assert os.path.isfile("config.ini") == True
 print("OK")
 print("----------")
 
+# Testing if base script file exists on disk in the current working directory
+print("----------")
+print("Checking if naked.py file exists -->")
+assert os.path.isfile("naked.py") == True
+print("OK")
+print("----------")
+
 # Opening the configuration file
 config = ConfigParser()
 config.read('config.ini')
